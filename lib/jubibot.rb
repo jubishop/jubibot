@@ -54,7 +54,9 @@ class JubiBot
   def run(async: false)
     bot.message { |event|
       if event.message.text.start_with?('!debug')
+        # rubocop:disable Lint/Debugger
         debugger(binding) if event.author == JUBI
+        # rubocop:enable Lint/Debugger
         next
       end
 
