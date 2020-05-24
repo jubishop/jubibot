@@ -10,6 +10,16 @@ Add this line to your application's Gemfile:
 gem 'jubibot', github: 'jubishop/jubibot'
 ```
 
+You will need these dependencies, too:
+
+```ruby
+gem 'csv'
+gem 'discordrb'
+
+gem 'core', github: 'jubishop/core'
+gem 'rstruct', github: 'jubishop/rstruct'
+```
+
 And then execute:
 
 ```sh
