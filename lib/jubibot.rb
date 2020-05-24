@@ -191,7 +191,7 @@ class JubiBot
   rescue JubiBotError => e
     return e.message
   rescue StandardError => e
-    Discordrb::LOGGER.warn(e.full_message)
+    Discordrb::LOGGER.error(e.full_message)
     return "Sorry, something went wrong. (#{bot.user(JUBI).mention})"
   end
 
