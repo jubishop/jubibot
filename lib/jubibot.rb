@@ -190,6 +190,8 @@ class JubiBot
     return e.message.gsub('{name}', member.display_name)
   rescue JubiBotError => e
     return e.message
+  rescue Discordrb::Errors::NoPermission => e
+    return e.message
   rescue StandardError => e
     Discordrb::LOGGER.error(e.full_message)
     return "Sorry, something went wrong. (#{bot.user(JUBI).mention})"
