@@ -3,7 +3,7 @@ require 'csv'
 require 'discordrb'
 require 'rstruct'
 
-require_relative 'exceptions.rb'
+require_relative 'exceptions'
 
 class JubiBot
   JUBI = 205164078761508864
