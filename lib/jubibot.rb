@@ -154,7 +154,7 @@ class JubiBot
     end
 
     if command.admin_only && event.author.id != JUBI
-      return "`#{command_name}` is executable by admins onl.y"
+      return "`#{command_name}` is executable by admins only."
     end
 
     return execute_command(command_name, command, event, params)
