@@ -143,6 +143,10 @@ class JubiBot
       return "Command: `#{command_name}` does not exist.  Try `help`."
     end
 
+    if command.admin_only && event.author.id != JUBI
+      return "`#{command_name}` is executable by admins only."
+    end
+
     num_args = params.length
     unless command.num_args.include?(num_args)
       qualifier = num_args > command.num_args.max ? 'Too many' : 'Not enough'
@@ -151,10 +155,6 @@ class JubiBot
         response << "  Try `#{cmd('help')} #{command_name}`."
       end
       return response
-    end
-
-    if command.admin_only && event.author.id != JUBI
-      return "`#{command_name}` is executable by admins only."
     end
 
     return execute_command(command_name, command, event, params)
