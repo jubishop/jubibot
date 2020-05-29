@@ -114,10 +114,12 @@ class JubiBot
   def process_reactions(event)
     message = event.message
     @reactions.each { |reaction|
-      next unless message.text.match?(reaction.regex)
+      match_data = message.text.match(reaction.regex)
+      next unless match_data
 
       emojis = reaction.emojis
-      Array(emojis.is_a?(Proc) ? emojis.run(event) : emojis).each { |emoji|
+      emojis = emojis.run(event, match_data) if emojis.is_a?(Proc)
+      Array(emojis).each { |emoji|
         message.react(emoji.is_a?(String) ? emoji : bot.emoji(emoji))
       }
     }
