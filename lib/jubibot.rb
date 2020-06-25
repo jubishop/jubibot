@@ -62,7 +62,7 @@ class JubiBot
       process_reactions(event)
 
       response = process_command(event)
-      event.respond(response) unless response.nil? || response.empty?
+      event.respond(response) if response.is_a?(String) && !response.empty?
     }
     bot.run(async)
   end
