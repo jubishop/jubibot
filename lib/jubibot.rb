@@ -30,6 +30,14 @@ class JubiBot
   private_constant :PaginatedMessage
   ###########################
 
+  ##### PRIVATE CONSTANTS #####
+  LEFT_ARROW = "\u{2B05}"
+  private_constant :LEFT_ARROW
+
+  RIGHT_ARROW = "\u{27A1}"
+  private_constant :RIGHT_ARROW
+  #############################
+
   attr_accessor :bot
 
   def initialize(token:,
@@ -64,8 +72,8 @@ class JubiBot
 
   def send_paginated_message(channel, messages)
     message = channel.send_message(messages.first)
-    message.react("\u{2B05}")
-    message.react("\u{27A1}")
+    message.react(LEFT_ARROW)
+    message.react(RIGHT_ARROW)
     @paginated_messages[message.id] = PaginatedMessage.new(messages)
   end
 
@@ -131,7 +139,8 @@ class JubiBot
   end
 
   def paginated_reaction(event)
-    return unless ['⬅', '➡'].include?(event.emoji.name)
+    return unless [LEFT_ARROW, RIGHT_ARROW].include?(event.emoji.name) &&
+                  @paginated_messages.key?(event.message.id)
 
     puts "Got reaction"
     debugger(binding)
