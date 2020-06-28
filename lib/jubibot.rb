@@ -131,7 +131,7 @@ class JubiBot
   end
 
   def paginated_reaction(event)
-    return unless ['⬅', '➡'].include?(event.name)
+    return unless ['⬅', '➡'].include?(event.emoji.name)
 
     puts "Got reaction"
     debugger(binding)
