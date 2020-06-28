@@ -57,6 +57,11 @@ class JubiBot
     aliases.each { |alias_| @aliases[alias_.to_sym] = command }
   end
 
+  # Only emojis or &block is needed.
+  def react(regex, emojis = nil, &block)
+    @reactions.push(Reaction.new(regex, emojis.nil? ? block : emojis))
+  end
+
   def send_paginated_message(channel, messages)
     message = channel.send_message(messages.first)
     message.react("\u{2B05}")
@@ -64,12 +69,10 @@ class JubiBot
     @paginated_messages[message.id] = PaginatedMessage.new(messages)
   end
 
-  # Only emojis or &block is needed.
-  def react(regex, emojis = nil, &block)
-    @reactions.push(Reaction.new(regex, emojis.nil? ? block : emojis))
-  end
-
   def run(async: false)
+    bot.reaction_add { |event| paginated_reaction(event) }
+    bot.reaction_remove { |event| paginated_reaction(event) }
+
     bot.message { |event|
       if event.message.text.start_with?("#{@prefix}debug")
         debugger(binding) if event.author == JUBI
@@ -80,11 +83,6 @@ class JubiBot
 
       response = process_command(event)
       event.respond(response) if response.is_a?(String) && !response.empty?
-    }
-
-    bot.reaction_add { |event|
-      puts "Just got a reaction"
-      # debugger(binding)
     }
 
     bot.run(async)
@@ -130,6 +128,11 @@ class JubiBot
       CommandDoc.new(command_doc)
     }
     return docs
+  end
+
+  def paginated_reaction(event)
+    puts "Got reaction"
+    debugger(binding)
   end
 
   def process_reactions(event)
