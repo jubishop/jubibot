@@ -32,13 +32,13 @@ class JubiBot
       elsif direction == RIGHT_ARROW
         @index += 1
       else
-        raise ArgumentError, "Direction must be LEFT_ARROW or RIGHT_ARROW"
+        raise ArgumentError, 'Direction must be LEFT_ARROW or RIGHT_ARROW'
       end
     end
 
     def message
       index = @index % @messages.length
-      index += @messages.length if index < 0
+      index += @messages.length if index.negative?
 
       return <<~MESSAGE.chomp
         #{@messages[index].strip}
@@ -51,10 +51,10 @@ class JubiBot
   ###########################
 
   ##### PRIVATE CONSTANTS #####
-  LEFT_ARROW = "\u{2B05}"
+  LEFT_ARROW = "\u{2B05}".freeze
   private_constant :LEFT_ARROW
 
-  RIGHT_ARROW = "\u{27A1}"
+  RIGHT_ARROW = "\u{27A1}".freeze
   private_constant :RIGHT_ARROW
   #############################
 
