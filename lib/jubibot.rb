@@ -60,7 +60,7 @@ class JubiBot
   def send_paginated_message(channel, messages)
     message = channel.send_message(messages.first)
     message.react("\u{2B05}")
-    message.react("\u{2B05}")
+    message.react("\u{27A1}")
     @paginated_messages[message.id] = PaginatedMessage.new(messages)
   end
 
