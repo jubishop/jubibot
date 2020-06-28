@@ -41,7 +41,7 @@ class JubiBot
       index += @messages.length if index < 0
 
       return <<~MESSAGE.chomp
-        #{@messages[index]}
+        #{@messages[index].strip}
         *page #{index + 1} of #{@messages.length}*
       MESSAGE
     end
