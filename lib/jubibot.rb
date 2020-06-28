@@ -37,7 +37,7 @@ class JubiBot
     end
 
     def message
-      return @messages[@index]
+      return @messages[@index % @messages.length]
     end
     alias to_s message
   end
@@ -85,8 +85,9 @@ class JubiBot
   end
 
   def send_paginated_message(channel, messages)
-    @paginated_messages[message.id] = PaginatedMessage.new(messages)
-    message = channel.send_message(@paginated_messages.fetch(message.id))
+    paginated_message = PaginatedMessage.new(messages)
+    message = channel.send_message(paginated_message)
+    @paginated_messages[message.id] = paginated_message
     message.react(LEFT_ARROW)
     message.react(RIGHT_ARROW)
   end
