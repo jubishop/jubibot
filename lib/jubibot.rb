@@ -19,6 +19,15 @@ class JubiBot
 
   CommandDoc = KVStruct.new(:description, %i[usage arg_notes])
   private_constant :CommandDoc
+
+  class PaginatedMessage
+    attr_reader :messages, :index
+    def initialize(messages, index = 0)
+      @messages = messages
+      @index = index
+    end
+  end
+  private_constant :PaginatedMessage
   ###########################
 
   attr_accessor :bot
@@ -35,6 +44,7 @@ class JubiBot
     @permissions = permissions
     @commands = {}
     @aliases = {}
+    @paginated_messages = {}
     @reactions = []
   end
 
@@ -45,6 +55,13 @@ class JubiBot
                                      admin_only: admin_only,
                                      proc: block)
     aliases.each { |alias_| @aliases[alias_.to_sym] = command }
+  end
+
+  def send_paginated_message(channel, messages)
+    message = channel.send_message(messages.first)
+    message.react("\u{2B05}")
+    message.react("\u{2B05}")
+    @paginated_messages[message.id] = PaginatedMessage.new(messages)
   end
 
   # Only emojis or &block is needed.
@@ -64,6 +81,12 @@ class JubiBot
       response = process_command(event)
       event.respond(response) if response.is_a?(String) && !response.empty?
     }
+
+    bot.reaction_add { |event|
+      puts "Just got a reaction"
+      # debugger(binding)
+    }
+
     bot.run(async)
   end
 
