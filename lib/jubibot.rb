@@ -21,11 +21,25 @@ class JubiBot
   private_constant :CommandDoc
 
   class PaginatedMessage
-    attr_reader :messages, :index
     def initialize(messages, index = 0)
       @messages = messages
       @index = index
     end
+
+    def move(direction)
+      if direction == LEFT_ARROW
+        @index -= 1
+      elsif direction == RIGHT_ARROW
+        @index += 1
+      else
+        raise ArgumentError, "Direction must be LEFT_ARROW or RIGHT_ARROW"
+      end
+    end
+
+    def message
+      return @messages[@index]
+    end
+    alias to_s message
   end
   private_constant :PaginatedMessage
   ###########################
@@ -71,10 +85,10 @@ class JubiBot
   end
 
   def send_paginated_message(channel, messages)
-    message = channel.send_message(messages.first)
+    @paginated_messages[message.id] = PaginatedMessage.new(messages)
+    message = channel.send_message(@paginated_messages.fetch(message.id))
     message.react(LEFT_ARROW)
     message.react(RIGHT_ARROW)
-    @paginated_messages[message.id] = PaginatedMessage.new(messages)
   end
 
   def run(async: false)
@@ -142,8 +156,9 @@ class JubiBot
     return unless [LEFT_ARROW, RIGHT_ARROW].include?(event.emoji.name) &&
                   @paginated_messages.key?(event.message.id)
 
-    puts "Got reaction"
-    debugger(binding)
+    paginated_message = @paginated_messages.fetch(event.message.id)
+    paginated_message.move(event.emoji.name)
+    event.message.edit(paginated_message)
   end
 
   def process_reactions(event)
