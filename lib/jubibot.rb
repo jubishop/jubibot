@@ -37,7 +37,13 @@ class JubiBot
     end
 
     def message
-      return @messages[@index % @messages.length]
+      index = @index % @messages.length
+      index += @messages.length if index < 0
+
+      return <<~MESSAGE.chomp
+        #{@messages[index]}
+        *page #{index + 1} of #{@messages.length}*
+      MESSAGE
     end
     alias to_s message
   end
