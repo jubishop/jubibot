@@ -117,7 +117,13 @@ class JubiBot
     bot.run(async)
   end
 
-  # Helper function for getting member from name, defaulting to author.
+  # Helper functions for getting member(s) from name(s), defaulting to author.
+  def members(event, names = [])
+    return [event.author] if names.empty?
+
+    return names.map { |name| member(event, name) }
+  end
+
   def member(event, name = nil)
     return event.author if name.nil?
 
