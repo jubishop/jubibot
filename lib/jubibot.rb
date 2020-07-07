@@ -136,6 +136,10 @@ class JubiBot
     return member
   end
 
+  def invite
+    return bot.invite_url(permission_bits: @permissions)
+  end
+
   ##### PRIVATE #####
   private
 
@@ -295,9 +299,5 @@ class JubiBot
       response << "\n  *Note:*" << "\n    #{doc.arg_notes.join("\n    ")}"
     end
     return response
-  end
-
-  def invite
-    return bot.invite_url(permission_bits: @permissions)
   end
 end
