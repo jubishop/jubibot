@@ -64,11 +64,13 @@ class JubiBot
                  command_bot:,
                  prefix: '!',
                  doc_file: nil,
+                 homepage: nil,
                  permissions: 8)
     @bot = Discordrb::Bot.new(log_mode: :warn, token: token)
     @command_bot = command_bot
     @prefix = prefix
     @docs = import_doc(doc_file)
+    @homepage = homepage
     @permissions = permissions
     @commands = {}
     @aliases = {}
@@ -267,12 +269,13 @@ class JubiBot
   end
 
   def help_message(params)
-    return <<-HELP.chomp if params.empty?
+    return <<-HELP.strip if params.empty?
 **List of commands**
     *For detailed command info, add it after `#{cmd('help')}`.*
 #{@docs.map { |command, command_doc|
   "  `#{command}`: #{command_doc.description}"
 }.join("\n")}
+#{"For more info see #{@homepage}" if @homepage}
     HELP
 
     if params.length > 1
