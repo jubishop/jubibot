@@ -65,13 +65,15 @@ class JubiBot
                  prefix: '!',
                  doc_file: nil,
                  homepage: nil,
-                 permissions: 8)
+                 permissions: 8,
+                 error_message: 'Sorry, something went wrong.')
     @bot = Discordrb::Bot.new(log_mode: :warn, token: token)
     @command_bot = command_bot
     @prefix = prefix
     @docs = import_doc(doc_file)
     @homepage = homepage
     @permissions = permissions
+    @error_message = error_message
     @commands = {}
     @aliases = {}
     @paginated_messages = {}
@@ -265,7 +267,7 @@ class JubiBot
     return e.message
   rescue StandardError => e
     Discordrb::LOGGER.error(e.full_message)
-    return "Sorry, something went wrong. (#{bot.user(JUBI).mention})"
+    return @error_message
   end
 
   def help_message(params)
