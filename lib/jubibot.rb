@@ -11,7 +11,7 @@ class JubiBot
   public_constant :JUBI
 
   ##### PRIVATE STRUCTS #####
-  Command = KVStruct.new(%i[aliases num_args admin_only proc])
+  Command = KVStruct.new(%i[aliases num_args restricted proc])
   private_constant :Command
 
   Reaction = RStruct.new(:regex, :emojis)
@@ -80,11 +80,11 @@ class JubiBot
     @reactions = []
   end
 
-  def command(command, aliases: [], num_args: (0..0), admin_only: false, &block)
+  def command(command, aliases: [], num_args: (0..0), restricted: false, &block)
     command = command.to_sym
     @commands[command] = Command.new(aliases: aliases,
                                      num_args: num_args,
-                                     admin_only: admin_only,
+                                     restricted: restricted,
                                      proc: block)
     aliases.each { |alias_| @aliases[alias_.to_sym] = command }
   end
@@ -216,7 +216,7 @@ class JubiBot
       return "Command: `#{command_name}` does not exist.  Try `help`."
     end
 
-    if command.admin_only && event.author.id != JUBI
+    unless command_allowed(command, event.author.id)
       return "`#{command_name}` is executable by admins only."
     end
 
@@ -231,6 +231,15 @@ class JubiBot
     end
 
     return execute_command(command_name, command, event, params)
+  end
+
+  def command_allowed(command, author_id)
+    return true unless command.restricted
+
+    return true if command.restricted.is_a?(Enumerable) &&
+                   command.restricted.include?(author_id)
+
+    return command.restricted == author_id
   end
 
   def shift_command(message)
