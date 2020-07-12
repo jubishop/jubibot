@@ -234,6 +234,7 @@ class JubiBot
   end
 
   def command_allowed(command, author_id)
+    debugger(binding)
     return true unless command.restricted
 
     return true if command.restricted.is_a?(Enumerable) &&
