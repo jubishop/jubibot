@@ -201,7 +201,7 @@ class JubiBot
     return unless message
 
     begin
-      params = CSV.parse_line(message.strip, col_sep: ' ')
+      params = CSV.parse_line(message.strip, col_sep: ' ').compact
     rescue CSV::MalformedCSVError
       return 'It appears you used an unclosed " in your command.'
     end
