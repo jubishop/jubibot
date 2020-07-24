@@ -206,16 +206,12 @@ class JubiBot
       return 'It appears you used an unclosed " in your command.'
     end
 
-    return 'yes?' if params.nil?
-
     command_name = command_name(params.shift)
     return help_message(params) if command_name == :help
 
-    command = @commands[command_name]
-    if command.nil?
-      return "Command: `#{command_name}` does not exist.  Try `help`."
-    end
+    return unless @commands.key?(command_name)
 
+    command = @commands[command_name]
     unless command_allowed(command, event.author.id)
       return "`#{command_name}` is executable by admins only."
     end
