@@ -11,7 +11,7 @@ class JubiBot
   public_constant :JUBI
 
   ##### PRIVATE STRUCTS #####
-  Command = KVStruct.new(%i[aliases num_args restricted proc])
+  Command = KVStruct.new(%i[aliases num_args whitelist owners proc])
   private_constant :Command
 
   Reaction = RStruct.new(:regex, :emojis)
@@ -80,11 +80,17 @@ class JubiBot
     @reactions = []
   end
 
-  def command(command, aliases: [], num_args: (0..0), restricted: false, &block)
+  def command(command,
+              aliases: [],
+              num_args: (0..0),
+              whitelist: false,
+              owners: false,
+              &block)
     command = command.to_sym
     @commands[command] = Command.new(aliases: aliases,
                                      num_args: num_args,
-                                     restricted: restricted,
+                                     whitelist: whitelist,
+                                     owners: owners,
                                      proc: block)
     aliases.each { |alias_| @aliases[alias_.to_sym] = command }
   end
@@ -212,7 +218,7 @@ class JubiBot
     return unless @commands.key?(command_name)
 
     command = @commands[command_name]
-    unless command_allowed(command, event.author.id)
+    unless command_allowed(command, event.author)
       return "`#{command_name}` is executable by admins only."
     end
 
@@ -229,13 +235,17 @@ class JubiBot
     return execute_command(command_name, command, event, params)
   end
 
-  def command_allowed(command, author_id)
-    return true unless command.restricted
+  def command_allowed(command, author)
+    return true unless command.whitelist || command.owners
 
-    return true if command.restricted.is_a?(Enumerable) &&
-                   command.restricted.include?(author_id)
+    return true if command.whitelist.is_a?(Enumerable) &&
+                   command.whitelist.include?(author.id)
 
-    return command.restricted == author_id
+    return true if command.whitelist == author.id
+
+    return true if command.owners && author.owner?
+
+    return false
   end
 
   def shift_command(message)
