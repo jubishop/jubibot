@@ -82,11 +82,12 @@ class JubiBot
 
   def command(command,
               aliases: [],
-              num_args: (0..0),
+              num_args: 0,
               whitelist: false,
               owners: false,
               &block)
     command = command.to_sym
+    num_args = (num_args..num_args) if num_args.is_a?(Numeric)
     @commands[command] = Command.new(aliases: aliases,
                                      num_args: num_args,
                                      whitelist: whitelist,
