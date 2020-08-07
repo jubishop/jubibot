@@ -218,7 +218,8 @@ class JubiBot
 
     return unless @commands.key?(command_name)
 
-    Discordrb::LOGGER.info("!#{command_name}: #{params.join(",")}")
+    Discordrb::LOGGER.info("#{event.server.name} => " \
+                           "#{command_name}: #{params.join(',')}")
 
     command = @commands[command_name]
     unless command_allowed(command, event.author)
