@@ -27,9 +27,10 @@ class JubiBot
     end
 
     def move(direction)
-      if direction == LEFT_ARROW
+      case direction
+      when LEFT_ARROW
         @index -= 1
-      elsif direction == RIGHT_ARROW
+      when RIGHT_ARROW
         @index += 1
       else
         raise ArgumentError, 'Direction must be LEFT_ARROW or RIGHT_ARROW'
@@ -114,7 +115,7 @@ class JubiBot
     bot.reaction_remove { |event| paginated_reaction(event) }
 
     bot.message { |event|
-      if event.message.text.start_with?("#{prefix}debug")
+      if event.message.text.start_with?("#{prefix(event)}debug")
         debugger(binding) if event.author == JUBI
         next
       end
@@ -158,8 +159,8 @@ class JubiBot
     return @prefix.is_a?(Proc) ? @prefix.run(event) : @prefix.to_s
   end
 
-  def cmd(command)
-    return "#{prefix}#{command}"
+  def cmd(event, command)
+    return "#{prefix(event)}#{command}"
   end
 
   def command_name(command)
@@ -208,7 +209,7 @@ class JubiBot
   end
 
   def process_command(event)
-    message = shift_command(event.message)
+    message = shift_command(event)
     return unless message
 
     begin
@@ -218,7 +219,7 @@ class JubiBot
     end
 
     command_name = command_name(params.shift)
-    return help_message(params) if command_name == :help
+    return help_message(event, params) if command_name == :help
 
     return unless @commands.key?(command_name)
 
@@ -236,7 +237,7 @@ class JubiBot
       qualifier = num_args > command.num_args.max ? 'Too many' : 'Not enough'
       response = "#{qualifier} args passed to `#{command_name}`."
       if @docs.key?(command_name)
-        response << "  Try `#{cmd('help')} #{command_name}`."
+        response << "  Try `#{cmd(event, 'help')} #{command_name}`."
       end
       return response
     end
@@ -257,14 +258,14 @@ class JubiBot
     return false
   end
 
-  def shift_command(message)
-    return shift_prefix(message) || shift_mention(message)
+  def shift_command(event)
+    return shift_prefix(event) || shift_mention(event.message)
   end
 
-  def shift_prefix(message)
-    return unless message.text.start_with?(prefix)
+  def shift_prefix(event)
+    return unless event.message.text.start_with?(prefix(event))
 
-    return message.text[prefix.length..]
+    return event.message.text[prefix(event).length..]
   end
 
   def shift_mention(message)
@@ -294,10 +295,10 @@ class JubiBot
     return @error_message
   end
 
-  def help_message(params)
+  def help_message(event, params)
     return <<-HELP.strip if params.empty?
 **List of commands**
-    *For detailed command info, add it after `#{cmd('help')}`.*
+    *For detailed command info, add it after `#{cmd(event, 'help')}`.*
 #{@docs.map { |command, command_doc|
   "  `#{command}`: #{command_doc.description}"
 }.join("\n")}
@@ -308,13 +309,14 @@ class JubiBot
       return "Too many args passed to `help`.  It's just `help [command]`."
     end
 
-    return help_command(command_name(params.first))
+    return help_command(event, command_name(params.first))
   end
 
-  def help_command(command_name)
+  def help_command(event, command_name)
     doc = @docs[command_name]
     if doc.nil?
-      return "No help exists for `#{command_name}`. Try `#{cmd('help')}`."
+      return "No help exists for `#{command_name}`. " \
+             "Try `#{cmd(event, 'help')}`."
     end
 
     command = @commands.fetch(command_name)
@@ -322,7 +324,7 @@ class JubiBot
     unless command.aliases.empty?
       response << "\n  *aliases:* `#{command.aliases.join('`, `')}`"
     end
-    response << "\n  *Usage:* `#{cmd(command_name)}"
+    response << "\n  *Usage:* `#{cmd(event, command_name)}"
     response << (doc.usage.nil? ? '`' : " #{doc.usage}`")
     if doc.arg_notes
       response << "\n  *Note:*" << "\n    #{doc.arg_notes.join("\n    ")}"
