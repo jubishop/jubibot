@@ -114,7 +114,7 @@ class JubiBot
     bot.reaction_remove { |event| paginated_reaction(event) }
 
     bot.message { |event|
-      if event.message.text.start_with?("#{@prefix}debug")
+      if event.message.text.start_with?("#{prefix}debug")
         debugger(binding) if event.author == JUBI
         next
       end
@@ -154,8 +154,12 @@ class JubiBot
   ##### PRIVATE #####
   private
 
+  def prefix(event)
+    return @prefix.is_a?(Proc) ? @prefix.run(event) : @prefix.to_s
+  end
+
   def cmd(command)
-    return (@prefix.nil? ? "@#{bot.profile.name} " : @prefix) + command.to_s
+    return "#{prefix}#{command}"
   end
 
   def command_name(command)
@@ -258,9 +262,9 @@ class JubiBot
   end
 
   def shift_prefix(message)
-    return unless !@prefix.nil? && message.text.start_with?(@prefix)
+    return unless message.text.start_with?(prefix)
 
-    return message.text[@prefix.length..]
+    return message.text[prefix.length..]
   end
 
   def shift_mention(message)
