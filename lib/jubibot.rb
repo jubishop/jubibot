@@ -223,15 +223,16 @@ class JubiBot
 
     return unless @commands.key?(command_name)
 
-    Discordrb::LOGGER.info("#{event.server.name} => " \
-                           "#{event.author.display_name} :: " \
-                           "#{command_name}: #{params.join(',')}")
+    command_log = "#{event.server.name} => #{event.author.display_name} :: " \
+                  "#{command_name}: #{params.join(',')}"
 
     command = @commands[command_name]
     unless command_allowed(command, event.author)
+      Discordrb::LOGGER.info("NOT ALLOWED: #{command_log}")
       return "`#{command_name}` is executable by admins only."
     end
 
+    Discordrb::LOGGER.info(command_log)
     num_args = params.length
     unless command.num_args.include?(num_args)
       qualifier = num_args > command.num_args.max ? 'Too many' : 'Not enough'
