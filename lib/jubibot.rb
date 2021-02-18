@@ -255,6 +255,9 @@ class JubiBot
 
     return true if command.owners && author.owner?
 
+    return true if command.owners.is_a?(String) &&
+                   author.roles.find { |role| role.name == command }
+
     return false
   end
 
@@ -286,9 +289,7 @@ class JubiBot
   rescue UserIDError => e
     member = event.server.member(e.user_id)
     return e.message.gsub('{name}', member.display_name)
-  rescue JubiBotError => e
-    return e.message
-  rescue Discordrb::Errors::NoPermission => e
+  rescue JubiBotError, Discordrb::Errors::NoPermission => e
     return e.message
   rescue StandardError => e
     Discordrb::LOGGER.error(e.full_message)

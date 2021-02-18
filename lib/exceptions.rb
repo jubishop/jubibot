@@ -1,7 +1,12 @@
-class JubiBotError < RuntimeError; end
+class JubiBotError < RuntimeError
+end
 
-class InvalidParam < JubiBotError; end
-class MemberNotFound < JubiBotError; end
+class InvalidParam < JubiBotError
+end
+
+class MemberNotFound < JubiBotError
+end
+
 class UserIDError < JubiBotError
   attr_reader :user_id
 
