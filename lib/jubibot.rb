@@ -255,6 +255,9 @@ class JubiBot
 
     return true if command.owners && author.owner?
 
+    Discordrb::LOGGER.info("#{author.roles}")
+    Discordrb::LOGGER.info(command.owners)
+
     return true if command.owners.is_a?(String) &&
                    author.roles.find { |role| role.name == command.owners }
 
