@@ -233,6 +233,7 @@ class JubiBot
     end
 
     Discordrb::LOGGER.info(command_log)
+
     num_args = params.length
     unless command.num_args.include?(num_args)
       qualifier = num_args > command.num_args.max ? 'Too many' : 'Not enough'
