@@ -256,7 +256,7 @@ class JubiBot
     return true if command.owners && author.owner?
 
     return true if command.owners.is_a?(String) &&
-                   author.roles.find { |role| role.name == command }
+                   author.roles.find { |role| role.name == command.owners }
 
     return false
   end
