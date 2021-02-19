@@ -212,8 +212,12 @@ class JubiBot
     message = shift_command(event)
     return unless message
 
+    message.strip!
     begin
-      params = CSV.parse_line(message.strip, col_sep: ' ').compact
+      quote_char = message.include?('“') ? '“' : '"'
+      params = CSV.parse_line(message,
+                              col_sep: ' ',
+                              quote_char: quote_char).compact
     rescue CSV::MalformedCSVError
       return 'It appears you used an unclosed " in your command.'
     end
