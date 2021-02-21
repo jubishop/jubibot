@@ -215,12 +215,10 @@ class JubiBot
     begin
       message.strip!
       message.gsub!(/“|”/, '"')
-      params = CSV.parse_line(message, col_sep: ' ')&.compact
+      params = CSV.parse_line(message, col_sep: ' ').compact
     rescue CSV::MalformedCSVError
       return 'It appears you used an unclosed " in your command.'
     end
-
-    return unless params
 
     command_name = command_name(params.shift)
     return help_message(event, params) if command_name == :help
