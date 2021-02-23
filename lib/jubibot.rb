@@ -67,8 +67,14 @@ class JubiBot
                  doc_file: nil,
                  homepage: nil,
                  permissions: 8,
-                 error_message: 'Sorry, something went wrong.')
-    @bot = Discordrb::Bot.new(log_mode: :warn, token: token)
+                 error_message: 'Sorry, something went wrong.',
+                 intents: %i[
+                   server_messages
+                   direct_messages
+                   server_message_reactions
+                   direct_message_reactions
+                 ])
+    @bot = Discordrb::Bot.new(log_mode: :warn, token: token, intents: intents)
     @command_bot = command_bot
     @prefix = prefix
     @docs = import_doc(doc_file)
