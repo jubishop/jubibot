@@ -70,9 +70,7 @@ class JubiBot
                  error_message: 'Sorry, something went wrong.',
                  intents: %i[
                    server_messages
-                   direct_messages
                    server_message_reactions
-                   direct_message_reactions
                  ])
     @bot = Discordrb::Bot.new(log_mode: :warn, token: token, intents: intents)
     @command_bot = command_bot
