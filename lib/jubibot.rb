@@ -245,8 +245,7 @@ class JubiBot
       qualifier = num_args > command.num_args.max ? 'Too many' : 'Not enough'
       response = "#{qualifier} args passed to `#{command_name}`."
       if @docs.key?(command_name)
-        return help_message(event, [command_name] + params)
-        # response << "  Try `#{cmd(event, 'help')} #{command_name}`."
+        response << help_message(event, [command_name])
       end
       return response
     end
