@@ -124,10 +124,14 @@ class JubiBot
         next
       end
 
-      process_reactions(event)
+      begin
+        process_reactions(event)
 
-      response = process_command(event)
-      event.respond(response) if response.is_a?(String) && !response.empty?
+        response = process_command(event)
+        event.respond(response) if response.is_a?(String) && !response.empty?
+      rescue Discordrb::Errors::NoPermission => e
+        Discordrb::LOGGER.error("High level permissions error: #{e.message}")
+      end
     }
 
     bot.run(async)
