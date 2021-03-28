@@ -308,6 +308,7 @@ class JubiBot
     return @error_message
   end
 
+  # rubocop:disable Layout/HeredocIndentation
   def help_message(event, params)
     return <<-HELP.strip if params.empty?
 **List of commands**
@@ -324,6 +325,7 @@ class JubiBot
 
     return help_command(event, command_name(params.first))
   end
+  # rubocop:enable Layout/HeredocIndentation
 
   def help_command(event, command_name)
     doc = @docs[command_name]

@@ -1,30 +1,26 @@
 # JubiBot
 
-Discord Command Bot.
+[![Rubocop Status](https://github.com/jubishop/jubibot/workflows/Rubocop/badge.svg)](https://github.com/jubishop/jubibot/actions/workflows/rubocop.yml)
+
+Command bot built on top of discordrb.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+### Global installation
+
+```zsh
+gem install jubibot --source https://www.jubigems.org/
+```
+
+### In a Gemfile
 
 ```ruby
-gem 'jubibot', github: 'jubishop/jubibot'
+gem 'jubibot', source: 'https://www.jubigems.org/'
 ```
 
-You will need these dependencies, too:
+## Usage
 
-```ruby
-gem 'csv'
-gem 'discordrb'
-
-gem 'core', github: 'jubishop/core'
-gem 'rstruct', github: 'jubishop/rstruct'
-```
-
-And then execute:
-
-```sh
-$ bundle install
-```
+See [`Tusk`](https://github.com/jubishop/Tusk) for example usage.
 
 ## License
 
