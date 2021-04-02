@@ -165,6 +165,9 @@ class JubiBot
 
   def prefix(event)
     return @prefix.is_a?(Proc) ? @prefix.run(event) : @prefix.to_s
+  rescue StandardError => e
+    event.respond(@error_message)
+    raise e
   end
 
   def cmd(event, command)
@@ -303,7 +306,7 @@ class JubiBot
     return e.message.gsub('{name}', member.display_name)
   rescue JubiBotError, Discordrb::Errors::NoPermission => e
     return e.message
-  rescue Exception => e # rubocop:disable Lint/RescueException
+  rescue StandardError => e
     Discordrb::LOGGER.error(e.full_message)
     return @error_message
   end
