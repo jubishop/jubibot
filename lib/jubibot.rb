@@ -303,7 +303,7 @@ class JubiBot
     return e.message.gsub('{name}', member.display_name)
   rescue JubiBotError, Discordrb::Errors::NoPermission => e
     return e.message
-  rescue StandardError => e
+  rescue Exception => e # rubocop:disable Lint/RescueException
     Discordrb::LOGGER.error(e.full_message)
     return @error_message
   end
