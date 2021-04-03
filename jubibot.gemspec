@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['jubishop@gmail.com']
   spec.homepage      = 'https://github.com/jubishop/jubibot'
   spec.license       = 'MIT'
-  spec.files         = Dir['lib/**/*.rb']
+  spec.files         = Dir['lib/**/*.rb'] + Dir['sig/**/*.rbs']
   spec.require_paths = ['lib']
   spec.bindir        = 'bin'
   spec.executables   = []

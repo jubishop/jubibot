@@ -1,7 +1,6 @@
+require 'core'
 require 'csv'
 require 'discordrb'
-
-require 'core'
 require 'rstruct'
 
 require_relative 'exceptions'

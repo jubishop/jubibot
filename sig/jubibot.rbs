@@ -1,0 +1,35 @@
+class JubiBot
+  JUBI: Integer
+
+  attr_accessor bot: Discordrb::Bot
+
+  def initialize: (token: String,
+                   command_bot: Object,
+                   ?prefix: String,
+                   ?doc_file: String,
+                   ?homepage: String,
+                   ?permissions: Integer,
+                   ?error_message: String,
+                   ?intents: Array[Symbol]) -> void
+
+  def command: (String command,
+                ?aliases: Array[String],
+                ?num_args: Integer,
+                ?whitelist: bool,
+                ?owners: bool | String) { () -> untyped } -> void
+
+  def react: (String | Regexp regex, ?String | Integer emoji) -> void
+           | (String | Regexp regex) { () -> String | Integer } -> void
+
+  def send_paginated_message: (Discordrb::Channel channel,
+                               Array[String] messages) -> void
+
+  def run: (?async: bool async) -> void
+
+  def members: (Discordrb::Event event, ?Array[String] names) ->
+               (::Array[Discordrb::Member])
+
+  def member: (Discordrb::Event event, ?String name) -> Discordrb::Member
+
+  def invite: () -> String
+end
