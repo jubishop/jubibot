@@ -1,7 +1,12 @@
+type discordbot = Object
+type discordchannel = Object
+type discordevent = Object
+type discordmember = Object
+
 class JubiBot
   JUBI: Integer
 
-  attr_accessor bot: Discordrb::Bot
+  attr_accessor bot: discordbot
 
   def initialize: (token: String,
                    command_bot: Object,
@@ -19,17 +24,18 @@ class JubiBot
                 ?owners: bool | String) { () -> untyped } -> void
 
   def react: (String | Regexp regex, ?String | Integer emoji) -> void
-           | (String | Regexp regex) { () -> String | Integer } -> void
+           | (String | Regexp regex) { () -> String } -> void
+           | (String | Regexp regex) { () -> String } -> void
 
-  def send_paginated_message: (Discordrb::Channel channel,
+  def send_paginated_message: (discordchannel channel,
                                Array[String] messages) -> void
 
   def run: (?async: bool async) -> void
 
-  def members: (Discordrb::Event event, ?Array[String] names) ->
-               (::Array[Discordrb::Member])
+  def members: (discordevent event, ?Array[String] names) ->
+               (::Array[discordmember])
 
-  def member: (Discordrb::Event event, ?String name) -> Discordrb::Member
+  def member: (discordevent event, ?String name) -> discordevent
 
   def invite: () -> String
 end
