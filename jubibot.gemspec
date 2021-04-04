@@ -19,4 +19,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('csv')
   spec.add_runtime_dependency('discordrb')
   spec.add_runtime_dependency('rstruct')
+  spec.add_runtime_dependency('yaml')
 end

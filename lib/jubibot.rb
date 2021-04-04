@@ -2,6 +2,7 @@ require 'core'
 require 'csv'
 require 'discordrb'
 require 'rstruct'
+require 'yaml'
 
 require_relative 'exceptions'
 
@@ -189,7 +190,7 @@ class JubiBot
   def import_doc(doc_file)
     return if doc_file.nil?
 
-    docs = JSON.parse(File.read(doc_file)).deep_symbolize_keys!
+    docs = YAML.safe_load(File.read(doc_file)) # .deep_symbolize_keys!
     docs.transform_values! { |command_doc|
       CommandDoc.new(command_doc)
     }

@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'csv'
 gem 'discordrb'
+gem 'yaml'
 
 # defaults
 gem 'rake'
