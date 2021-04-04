@@ -15,4 +15,9 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand(config.seed)
+
+  # JubiBot specific configurations
+  config.before {
+    allow(Discordrb::Bot).to(receive(:new) { Discordrb::FakeBot.new })
+  }
 end

@@ -1,3 +1,4 @@
+# See https://github.com/shardlab/discordrb
 module Discordrb
   class Bot
   end
