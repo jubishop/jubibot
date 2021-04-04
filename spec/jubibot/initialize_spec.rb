@@ -1,6 +1,10 @@
 require 'jubibot'
 
-RSpec.describe(JubiBot) {
+RSpec.describe(JubiBot, '#initialize') {
+  before {
+    allow(Discordrb::Bot).to(receive(:new))
+  }
+
   it('passes params onward to Discordrb::Bot') {
     JubiBot.new(token: 'one', command_bot: nil)
     expect(Discordrb::Bot).to(have_received(:new).with(

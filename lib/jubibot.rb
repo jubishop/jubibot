@@ -129,7 +129,8 @@ class JubiBot
         response = process_command(event)
         event.respond(response) if response.is_a?(String) && !response.empty?
       rescue Discordrb::Errors::NoPermission => e
-        Discordrb::LOGGER.error("High level permissions error: #{e.message}")
+        Discordrb::LOGGER.error(
+            "Generic permissions error in #{event.server.name}: #{e.message}")
       end
     }
 
