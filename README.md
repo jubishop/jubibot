@@ -1,6 +1,6 @@
 # JubiBot
 
-[![Rubocop Status](https://github.com/jubishop/jubibot/workflows/Rubocop/badge.svg)](https://github.com/jubishop/jubibot/actions/workflows/rubocop.yml)
+[![RSpec Status](https://github.com/jubishop/jubibot/workflows/RSpec/badge.svg)](https://github.com/jubishop/jubibot/actions/workflows/rspec.yml)  [![Rubocop Status](https://github.com/jubishop/jubibot/workflows/Rubocop/badge.svg)](https://github.com/jubishop/jubibot/actions/workflows/rubocop.yml)
 
 Command bot built on top of discordrb.
 
