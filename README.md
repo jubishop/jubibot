@@ -20,7 +20,7 @@ gem 'jubibot', source: 'https://www.jubigems.org/'
 
 ## Usage
 
-See [`Tusk`](https://github.com/jubishop/Tusk) for example usage.
+See [`Tusk bin/bot.rb`](https://github.com/jubishop/Tusk/blob/master/bin/bot.rb) for example usage.
 
 ## License
 
