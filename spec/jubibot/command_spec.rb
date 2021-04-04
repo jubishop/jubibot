@@ -11,7 +11,9 @@ RSpec.describe(JubiBot, '#command') {
 
       @fake_bot = Discordrb::FakeBot.new
       allow(Discordrb::Bot).to(receive(:new) { @fake_bot })
+
       @command_bot = double(Object, ping: nil)
+
       jubi_bot = JubiBot.new(token: 'tkn', command_bot: @command_bot, **params)
       jubi_bot.command('ping')
       jubi_bot.run
