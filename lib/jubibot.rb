@@ -166,7 +166,8 @@ class JubiBot
 
   def prefix(event)
     return @prefix.is_a?(Proc) ? @prefix.run(event) : @prefix.to_s
-  rescue StandardError
+  rescue StandardError => e
+    Discordrb::LOGGER.error(e.full_message)
     return '!'
   end
 
