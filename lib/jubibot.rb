@@ -166,9 +166,8 @@ class JubiBot
 
   def prefix(event)
     return @prefix.is_a?(Proc) ? @prefix.run(event) : @prefix.to_s
-  rescue StandardError => e
-    event.respond(@error_message)
-    raise e
+  rescue StandardError
+    return '!'
   end
 
   def cmd(event, command)
