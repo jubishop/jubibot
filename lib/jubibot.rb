@@ -66,6 +66,7 @@ class JubiBot
                  prefix: '!',
                  doc_file: nil,
                  homepage: nil,
+                 support_channel: nil,
                  permissions: 8,
                  error_message: 'Sorry, something went wrong.',
                  intents: %i[
@@ -77,6 +78,7 @@ class JubiBot
     @prefix = prefix
     @docs = import_doc(doc_file)
     @homepage = homepage
+    @support_channel = support_channel
     @permissions = permissions
     @error_message = error_message
     @commands = {}
@@ -321,6 +323,7 @@ class JubiBot
   "  `#{command}`: #{command_doc.description}"
 }.join("\n")}
 #{"For more info see #{@homepage}" if @homepage}
+#{"For support visit #{@support_channel}" if @support_channel}
     HELP
 
     if params.length > 1
