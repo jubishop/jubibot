@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'jubibot'
-  spec.version       = '1.2'
+  spec.version       = '1.3'
   spec.summary       = %q(Command bot built on top of discordrb.)
   spec.authors       = ['Justin Bishop']
   spec.email         = ['jubishop@gmail.com']
@@ -17,7 +17,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new('>= 3.0')
   spec.add_runtime_dependency('core')
   spec.add_runtime_dependency('csv')
-  spec.add_runtime_dependency('debugger')
   spec.add_runtime_dependency('discordrb')
   spec.add_runtime_dependency('rstruct')
   spec.add_runtime_dependency('yaml')

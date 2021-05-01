@@ -1,11 +1,11 @@
 require 'core'
 require 'csv'
-require 'debugger'
 require 'discordrb'
 require 'json'
 require 'rstruct'
 require 'yaml'
 
+require_relative 'debugger'
 require_relative 'exceptions'
 
 class JubiBot

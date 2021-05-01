@@ -10,7 +10,6 @@ Command bot built on top of discordrb.
 
 ```ruby
 source: 'https://www.jubigems.org/' do
-  gem 'debugger'
   gem 'jubibot'
 end
 ```

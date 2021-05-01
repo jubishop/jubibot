@@ -18,7 +18,6 @@ end
 
 source 'https://www.jubigems.org' do
   gem 'core'
-  gem 'debugger'
   gem 'rstruct'
 
   # defaults
