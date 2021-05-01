@@ -1,6 +1,8 @@
 require 'core'
 require 'csv'
+require 'debugger'
 require 'discordrb'
+require 'json'
 require 'rstruct'
 require 'yaml'
 
