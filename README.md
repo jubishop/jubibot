@@ -9,12 +9,14 @@ Command bot built on top of discordrb.
 ### Global installation
 
 ```zsh
+gem install debugger --source https://www.jubigems.org/
 gem install jubibot --source https://www.jubigems.org/
 ```
 
 ### In a Gemfile
 
 ```ruby
+gem 'debugger', source: 'https://www.jubigems.org/'
 gem 'jubibot', source: 'https://www.jubigems.org/'
 ```
 
