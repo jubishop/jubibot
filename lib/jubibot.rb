@@ -72,6 +72,7 @@ class JubiBot
                  permissions: 8,
                  error_message: 'Sorry, something went wrong.',
                  intents: %i[
+                   servers
                    server_messages
                    server_message_reactions
                  ])
