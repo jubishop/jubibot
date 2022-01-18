@@ -134,9 +134,10 @@ class JubiBot
 
         response = process_command(event)
         event.respond(response) if response.is_a?(String) && !response.empty?
-      rescue Discordrb::Errors::NoPermission => e
+      rescue Discordrb::Errors::NoPermission => error
         Discordrb::LOGGER.error(
-            "Generic permissions error in #{event.server.name}: #{e.message}")
+            "Generic permissions error in #{event.server.name}: " \
+            "#{error.message}")
       end
     }
 
@@ -171,8 +172,8 @@ class JubiBot
 
   def prefix(event)
     return @prefix.is_a?(Proc) ? @prefix.run(event) : @prefix.to_s
-  rescue StandardError => e
-    Discordrb::LOGGER.error(e.full_message)
+  rescue StandardError => error
+    Discordrb::LOGGER.error(error.full_message)
     return '!'
   end
 
@@ -302,18 +303,18 @@ class JubiBot
   def execute_command(command_name, command, event, params)
     args = command.proc.nil? ? params : command.proc.run(event, *params)
     return @command_bot.public_send(command_name, *args)
-  rescue InvalidParam => e
-    return "Error with parameters to `#{command_name}`:\n  #{e.message}."
-  rescue MemberNotFound => e
-    name = e.message
+  rescue InvalidParam => error
+    return "Error with parameters to `#{command_name}`:\n  #{error.message}."
+  rescue MemberNotFound => error
+    name = error.message
     return "#{name} not found on #{event.server.name}."
-  rescue UserIDError => e
-    member = event.server.member(e.user_id)
-    return e.message.gsub('{name}', member.display_name)
-  rescue JubiBotError, Discordrb::Errors::NoPermission => e
-    return e.message
-  rescue StandardError => e
-    Discordrb::LOGGER.error(e.full_message)
+  rescue UserIDError => error
+    member = event.server.member(error.user_id)
+    return error.message.gsub('{name}', member.display_name)
+  rescue JubiBotError, Discordrb::Errors::NoPermission => error
+    return error.message
+  rescue StandardError => error
+    Discordrb::LOGGER.error(error.full_message)
     return @error_message
   end
 

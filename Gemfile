@@ -1,20 +1,19 @@
-ruby '>= 3'
+ruby '>= 3.0.2'
+source 'https://rubygems.org'
 
-source 'https://rubygems.org' do
-  gem 'csv'
-  gem 'discordrb'
-  gem 'yaml'
+gem 'csv'
+gem 'discordrb', github: 'shardlab/discordrb'
+gem 'yaml'
 
-  # defaults
-  gem 'rake'
-  gem 'rbs'
-  gem 'rspec'
-  gem 'rubocop'
-  gem 'rubocop-performance'
-  gem 'rubocop-rake'
-  gem 'rubocop-rspec'
-  gem 'steep'
-end
+# defaults
+gem 'rake'
+gem 'rbs'
+gem 'rspec'
+gem 'rubocop'
+gem 'rubocop-performance'
+gem 'rubocop-rake'
+gem 'rubocop-rspec'
+gem 'steep'
 
 source 'https://www.jubigems.org' do
   gem 'core'

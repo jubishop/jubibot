@@ -1,3 +1,4 @@
+# rubocop:disable Style/TopLevelMethodDefinition
 def debugger(binding = TOPLEVEL_BINDING)
   require 'readline'
 
@@ -10,9 +11,10 @@ def debugger(binding = TOPLEVEL_BINDING)
     # rubocop:disable Security/Eval, Lint/RescueException
     begin
       puts JSON.pretty_generate(eval(input, binding))
-    rescue Exception => e
-      puts "#{e.class}: #{e}"
+    rescue Exception => error
+      puts "#{error.class}: #{error}"
     end
     # rubocop:enable Security/Eval, Lint/RescueException
   end
 end
+# rubocop:enable Style/TopLevelMethodDefinition

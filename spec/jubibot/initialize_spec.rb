@@ -11,6 +11,7 @@ RSpec.describe(JubiBot, '#initialize') {
                                   log_mode: :warn,
                                   token: 'one',
                                   intents: %i[
+                                    servers
                                     server_messages
                                     server_message_reactions
                                   ]))
