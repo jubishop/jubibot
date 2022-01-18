@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'jubibot'
-  spec.version       = '1.8'
+  spec.version       = '1.9'
   spec.summary       = %q(Command bot built on top of discordrb.)
   spec.authors       = ['Justin Bishop']
   spec.email         = ['jubishop@gmail.com']

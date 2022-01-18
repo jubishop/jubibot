@@ -155,7 +155,10 @@ class JubiBot
     return event.author if name.nil?
 
     mentioned_id = mentioned_id(name)
-    return bot.member(event.server, mentioned_id) if mentioned_id
+    raise JubiBotError, 'You must use @mentions for users' unless mentioned_id
+
+    member = bot.member(event.server, mentioned_id) if mentioned_id
+    return member if member
 
     raise MemberNotFound, name
   end
