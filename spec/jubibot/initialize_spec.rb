@@ -12,7 +12,6 @@ RSpec.describe(JubiBot, '#initialize') {
                                   token: 'one',
                                   intents: %i[
                                     servers
-                                    server_members
                                     server_messages
                                     server_message_reactions
                                   ]))

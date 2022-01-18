@@ -73,7 +73,6 @@ class JubiBot
                  error_message: 'Sorry, something went wrong.',
                  intents: %i[
                    servers
-                   server_members
                    server_messages
                    server_message_reactions
                  ])
@@ -158,10 +157,7 @@ class JubiBot
     mentioned_id = mentioned_id(name)
     return bot.member(event.server, mentioned_id) if mentioned_id
 
-    member = event.server.members.find { |m| [m.name, m.nick].include?(name) }
-    raise MemberNotFound, name if member.nil?
-
-    return member
+    raise MemberNotFound
   end
 
   def invite
