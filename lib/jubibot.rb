@@ -144,7 +144,7 @@ class JubiBot
     bot.run(async)
   end
 
-  # Helper functions for getting member(s) from name(s), defaulting to author.
+  # Helper functions for getting members from mentions, defaulting to author.
   def members(event, names = [])
     return [event.author] if names.empty?
 
@@ -157,7 +157,7 @@ class JubiBot
     mentioned_id = mentioned_id(name)
     return bot.member(event.server, mentioned_id) if mentioned_id
 
-    raise MemberNotFound
+    raise MemberNotFound, name
   end
 
   def invite
