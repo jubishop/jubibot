@@ -73,6 +73,7 @@ class JubiBot
                  error_message: 'Sorry, something went wrong.',
                  intents: %i[
                    servers
+                   server_members
                    server_messages
                    server_message_reactions
                  ])
